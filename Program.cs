@@ -24,10 +24,13 @@ builder.Services.AddSession(option =>
 #endregion
 
 #region Configure AWS
-
 // COnfigure AWS S3 Client
-var awsSettings = builder.Configuration.GetSection(key: "AWS");
-var credential = new BasicAWSCredentials(awsSettings[key: "AccessKeyId"], awsSettings[key: "SecretAccessKey"]);
+//var awsSettings = builder.Configuration.GetSection(key: "AWS");
+//var credential = new BasicAWSCredentials(awsSettings[key: "AccessKeyId"], awsSettings[key: "SecretAccessKey"]);
+var credential = new BasicAWSCredentials(
+    builder.Configuration.GetConnectionString("AWS:AccessKeyId"), 
+    builder.Configuration.GetConnectionString("AWS:SecretAccessKey")
+    );
 
 // Configure AWS options
 var awsOptions = builder.Configuration.GetAWSOptions();
