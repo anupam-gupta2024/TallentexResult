@@ -1,0 +1,54 @@
+﻿@using System.Data
+@if (Model.ds2 != null && Model.ds2.Tables.Count > 2)
+{
+    DataTable dtresult = Model.ds2.Tables[2];
+
+
+    <div class="mb-2 card">
+        <div class="card-body">
+            <div id="container1"></div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <h6 class="card-title text-center">Comparision of Score based on Difficulty (Based on Candidate Response Stats)</h6>
+        </div>
+        <div class="card-content collapse show">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped mb-0 text-center">
+                        <thead>
+                            <tr>
+                                <th class="border-top-0 text-left">Questions</th>
+                                <th class="border-top-0">Correct</th>
+                                <th class="border-top-0">Out of</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (DataRow row in dtresult.Rows)
+                            {
+                                if (row["LevelTitle"].ToString().Contains("Total"))
+                                {
+                                    <tr>
+                                        <th class="text-left">@row["LevelTitle"]</th>
+                                        <th>@row["TotalCorrect"]</th>
+                                        <th>@row["LevelValue"]</th>
+                                    </tr>
+                                }
+                                else
+                                {
+                                    <tr>
+                                        <td class="text-left">@row["LevelTitle"]</td>
+                                        <td>@row["TotalCorrect"]</td>
+                                        <td>@row["LevelValue"]</td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}

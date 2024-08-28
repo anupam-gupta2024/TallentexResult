@@ -1,0 +1,240 @@
+﻿@using System.Data
+@using TallentexResult.Servies
+@model TallentexResult.Entities.StudentMain
+
+
+@if (Model.ds3 != null && Model.ds3.Tables.Count > 0)
+{
+    var data = "";
+    Dictionary<string, string> dSubject = new Dictionary<string, string>();
+
+    DataTable dt = Model.ds3.Tables[0];
+    int i = 0;
+    foreach (DataRow row2 in dt.Rows)
+    {
+        string subjectTitle = row2["SubjectTitle"].ToString();
+        string topicTitle = row2["TopicTitle"].ToString().Length > 20 ? row2["TopicTitle"].ToString().Substring(0, 20).Trim() : row2["TopicTitle"].ToString().Trim();
+        int value = 0;
+        int.TryParse(row2["TopicValue"].ToString(), out value);
+        if (value > 0)
+        {
+            value = (value * 100 / 450) - 1;
+        }
+
+        if (!dSubject.ContainsKey(subjectTitle))
+        {
+            dSubject.Add(subjectTitle, topicTitle);
+            if (i != 0)
+            {
+                data = " { Subject: '" + subjectTitle + "', Topic: '', Value : 0 }," + data;
+            }
+            i++;
+        }
+
+        data = " { Subject: '" + subjectTitle + "', Topic: '" + topicTitle + "', Value : " + value.ToString() + " },"
+            + data;
+
+        //SetAMChart(data);
+
+
+    }
+
+    data = data.TrimEnd(',');
+
+
+    <div class="card">
+        <div class="card-header">
+            <h6 class="card-title text-center">Topicwise Analysis</h6>
+        </div>
+        <div class="card-content collapse show">
+            <div class="card-body">
+                <!-- Styles -->
+                <style>
+                    #chartdiv {
+                        width: 100%;
+                        height: 800px;
+                    }
+                </style>
+
+                <!-- Resources -->
+                <partial name="../Jquery/_AmChart" />
+
+                <!-- Chart code -->
+                <script>
+                    am5.ready(function () {
+
+                        // Create root element
+                        // https://www.amcharts.com/docs/v5/getting-started/#Root_element
+                        var root = am5.Root.new("chartdiv");
+
+
+                        // Set themes
+                        // https://www.amcharts.com/docs/v5/concepts/themes/
+                        root.setThemes([
+                            am5themes_Animated.new(root)
+                        ]);
+
+                        // Create chart
+                        // https://www.amcharts.com/docs/v5/charts/xy-chart/
+                        var chart = root.container.children.push(am5xy.XYChart.new(root, {
+                            panX: false,
+                            panY: false,
+                            wheelX: "none",
+                            wheelY: "none",
+                            //paddingLeft: 0,
+                            layout: root.horizontalLayout
+                        }));
+
+                        var legendData = [];
+                        var legend = chart.children.push(
+                            am5.Legend.new(root, {
+                                nameField: "name",
+                                fillField: "color",
+                                strokeField: "color",
+                                //centerY: am5.p50,
+                                marginLeft: 20,
+                                y: 20,
+                                layout: root.verticalLayout,
+                                clickTarget: "none"
+                            })
+                        );
+
+
+                    @(Html.Raw("var data = [" + data + "];"))
+                                                                                                                                                                    //var data = [{ Subject: 'IQ', Topic: 'Syllogism', Value: 21 }, { Subject: 'IQ', Topic: 'Sitting Arangement', Value: 21 }, { Subject: 'IQ', Topic: 'Series', Value: 99 }, { Subject: 'IQ', Topic: 'Puzzle Test', Value: 32 }, { Subject: 'IQ', Topic: 'Number Ranking', Value: 99 }, { Subject: 'IQ', Topic: 'Mathematical Operati', Value: 21 }, { Subject: 'IQ', Topic: 'Inserting the Missin', Value: 21 }, { Subject: 'IQ', Topic: 'Embedded Figure', Value: 32 }, { Subject: 'IQ', Topic: 'Direction Sense Test', Value: 99 }, { Subject: 'IQ', Topic: 'Cubes and Dice', Value: 99 }, { Subject: 'IQ', Topic: 'Counting Figure', Value: 99 }, { Subject: 'IQ', Topic: 'Coding and Decoding', Value: 99 }, { Subject: 'IQ', Topic: 'Clock', Value: 99 }, { Subject: 'IQ', Topic: 'Calendar', Value: 99 }, { Subject: 'IQ', Topic: 'Blood Relation', Value: 99 }, { Subject: 'IQ', Topic: 'Analogy', Value: 99 }, { Subject: 'IQ', Topic: '', Value: 0 }, { Subject: 'Biology', Topic: 'Why do we fall ill', Value: 99 }, { Subject: 'Biology', Topic: 'Transportation in pl', Value: 99 }, { Subject: 'Biology', Topic: 'Transportation in An', Value: 65 }, { Subject: 'Biology', Topic: 'Respiration', Value: 99 }, { Subject: 'Biology', Topic: 'Nutrition', Value: 99 }, { Subject: 'Biology', Topic: 'Natural Resources', Value: 32 }, { Subject: 'Biology', Topic: 'Excretion', Value: 99 }, { Subject: 'Biology', Topic: 'Diversity in living', Value: 99 }, { Subject: 'Biology', Topic: '', Value: 0 }, { Subject: 'Maths', Topic: 'Surface area and Vol', Value: 99 }, { Subject: 'Maths', Topic: 'Statistics', Value: 99 }, { Subject: 'Maths', Topic: 'Probability', Value: 99 }, { Subject: 'Maths', Topic: 'Polynomial (std-X)', Value: 99 }, { Subject: 'Maths', Topic: 'Polynomial (std-IX)', Value: 99 }, { Subject: 'Maths', Topic: 'Number System', Value: 65 }, { Subject: 'Maths', Topic: 'Lines, Angles,Triang', Value: 99 }, { Subject: 'Maths', Topic: 'Linear Equation in T', Value: 99 }, { Subject: 'Maths', Topic: 'Introduction to Trig', Value: 21 }, { Subject: 'Maths', Topic: 'Herons Formula', Value: 21 }, { Subject: 'Maths', Topic: 'Co-Oridinate geometr', Value: 21 }, { Subject: 'Maths', Topic: 'Circles (std-IX)', Value: 99 }, { Subject: 'Maths', Topic: '', Value: 0 }, { Subject: 'Chemistry', Topic: 'Metal and Non-metal', Value: 99 }, { Subject: 'Chemistry', Topic: 'Chemical Reaction', Value: 99 }, { Subject: 'Chemistry', Topic: 'Atomic Structure', Value: 99 }, { Subject: 'Chemistry', Topic: 'Atom and molecules', Value: 99 }, { Subject: 'Chemistry', Topic: 'Acid Bases, Salts', Value: 99 }, { Subject: 'Chemistry', Topic: '', Value: 0 }, { Subject: 'Physics', Topic: 'Work Power and Energ', Value: 99 }, { Subject: 'Physics', Topic: 'Sound', Value: 99 }, { Subject: 'Physics', Topic: 'Reflection of Light', Value: 99 }, { Subject: 'Physics', Topic: 'Motion', Value: 99 }, { Subject: 'Physics', Topic: 'Human Eye', Value: 99 }, { Subject: 'Physics', Topic: 'Gravitation', Value: 99 }, { Subject: 'Physics', Topic: 'Force and NLM', Value: 99 }];
+
+
+                                                                                                                        // Create axes
+                                                                                                                        // https://www.amcharts.com/docs/v5/charts/xy-chart/axes/
+                                                                                                                        var yAxis = chart.yAxes.push(am5xy.CategoryAxis.new(root, {
+                            categoryField: "Topic",
+                            renderer: am5xy.AxisRendererY.new(root, {
+                                minGridDistance: 10
+                            }),
+                            tooltip: am5.Tooltip.new(root, {})
+                        }));
+
+                        yAxis.get("renderer").labels.template.setAll({
+                            fontSize: 12,
+                            location: 0.5
+                        })
+
+                        yAxis.data.setAll(data);
+
+                        var xAxis = chart.xAxes.push(am5xy.ValueAxis.new(root, {
+                            renderer: am5xy.AxisRendererX.new(root, {}),
+                            tooltip: am5.Tooltip.new(root, {})
+                        }));
+
+                        var series = chart.series.push(am5xy.ColumnSeries.new(root, {
+                            xAxis: xAxis,
+                            yAxis: yAxis,
+                            valueXField: "Value",
+                            categoryYField: "Topic",
+                            tooltip: am5.Tooltip.new(root, {
+                                pointerOrientation: "horizontal"
+                            })
+                        }));
+
+                        series.columns.template.setAll({
+                            width: am5.percent(90),
+                            strokeOpacity: 0
+                        });
+
+                        series.columns.template.adapters.add("tooltipText", function (fill, target) {
+                            if (target.dataItem) {
+                                //alert(target.dataItem.dataContext.Value);
+                                switch (target.dataItem.dataContext.Value) {
+                                    case 21:
+                                        return "{categoryY}: [bold]WEAK (Not Attempted)";
+                                        break;
+                                    case 32:
+                                        return "{categoryY}: [bold]WEAK (Low Score)";
+                                        break;
+                                    case 65:
+                                        return "{categoryY}: [bold]AVERAGE";
+                                        break;
+                                    case 99:
+                                        return "{categoryY}: [bold]STRONG";
+                                        break;
+                                }
+                            }
+                        });
+
+                        series.columns.template.adapters.add("fill", function (fill, target) {
+                            if (target.dataItem) {
+                                switch (target.dataItem.dataContext.Subject) {
+                    @for (int k = 0; k < dSubject.Count; k++)
+                    {
+                        @(Html.Raw("case \"" + dSubject.ElementAt(k).Key + "\":  return chart.get(\"colors\").getIndex(" + k.ToString() + "); break;"))
+                    }
+                                                                                                                                                                                }
+                        }
+                                                                                                                                                                            return fill;
+                    });
+
+
+                    series.data.setAll(data);
+                    series.appear();
+
+
+                    function createRange(label, category, color) {
+                        var rangeDataItem = yAxis.makeDataItem({
+                            category: category
+                        });
+
+                        var range = yAxis.createAxisRange(rangeDataItem);
+
+                        rangeDataItem.get("label").setAll({
+                            fill: color,
+                            text: label,
+                            location: 1,
+                            fontWeight: "bold",
+                            dx: -130
+                        });
+
+                        rangeDataItem.get("grid").setAll({
+                            stroke: color,
+                            strokeOpacity: 1,
+                            location: 1
+                        });
+
+                        rangeDataItem.get("tick").setAll({
+                            stroke: color,
+                            strokeOpacity: 1,
+                            location: 1,
+                            visible: true,
+                            length: 130
+                        });
+
+                        legendData.push({ name: label, color: color });
+
+                    }
+
+                    @for (int k = 0; k < dSubject.Count; k++)
+                    {
+                        @(Html.Raw("createRange(\"" + dSubject.ElementAt(k).Key + "\", \"" + dSubject.ElementAt(k).Value + "\", chart.get(\"colors\").getIndex(" + k.ToString() + "));"))
+                    }
+                        legend.data.setAll(legendData);
+
+
+                    var cursor = chart.set("cursor", am5xy.XYCursor.new(root, {
+                        xAxis: xAxis,
+                        yAxis: yAxis
+                    }));
+
+
+                    // Make stuff animate on load
+                    // https://www.amcharts.com/docs/v5/concepts/animations/
+                    chart.appear(1000, 100);
+
+                                                                                                                                                                }); // end am5.ready()
+                </script>
+
+                <!-- HTML -->
+                <div id="chartdiv"></div>
+            </div>
+        </div>
+    </div>
+
+}

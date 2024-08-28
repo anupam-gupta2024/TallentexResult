@@ -1,0 +1,122 @@
+﻿@using System.Data
+@model TallentexResult.Entities.StudentMain
+
+
+@if (Model.ds1 != null && Model.ds1.Tables.Count > 0)
+{
+    DataTable dt = Model.ds1.Tables[0];
+
+    if (dt.Rows[0]["Cash"].ToString() != "0")
+    {
+        <div class="card overflow-hidden">
+            <div class="bg-holder bg-card" style="background-image: url(&quot;/images/background/success.png&quot;);"></div>
+            <div class="card-header">
+                <h6 class="card-title">Cash Reward (Exam Mode : @Model.ds1.Tables[0].Rows[0]["exammode"])</h6>
+            </div>
+            <div class="card-content collapse show">
+                <div class="position-relative card-body">
+                    <div class="row">
+                        <div class="col-12 col-md-4 text-center">
+                            <i class="la la-trophy mb-2 bg-danger white bg-lighten-2 rounded-circle font-large-3 p-2"></i>
+                            @* <h2>
+                                Congratulation!
+                            </h2> *@
+                            <div class="text-center">
+                                <style type="text/css">
+                                    .animated-text {
+                                        font-size: 34px;
+                                        font-weight: 600;
+                                        min-width: 280px;
+                                    }
+
+                                        .animated-text span {
+                                            position: relative;
+                                        }
+
+                                            .animated-text span::before {
+                                                content: "Youtuber";
+                                                color: #ff7f50;
+                                                animation: words 20s infinite;
+                                            }
+
+                                            .animated-text span::after {
+                                                content: "";
+                                                position: absolute;
+                                                width: calc(100% + 8px);
+                                                height: 100%;
+                                                background-color: #fff;
+                                                border-left: 2px solid #ff7f50;
+                                                right: -8px;
+                                                animation: cursor .8s infinite, typing 20s steps(14) infinite;
+                                            }
+
+                                    @@keyframes cursor {
+                                        to {
+                                            border-left: 2px solid #ff7f5000;
+                                        }
+                                    }
+
+                                    @@keyframes words {
+                                        0%, 20% {
+                                            content: "Congratulation!";
+                                        }
+
+                                        21%, 40% {
+                                            content: "Congratulation!";
+                                        }
+
+                                        41%, 60% {
+                                            content: "Congratulation!";
+                                        }
+
+                                        61%, 80% {
+                                            content: "Congratulation!";
+                                        }
+
+                                        81%, 100% {
+                                            content: "Congratulation!";
+                                        }
+                                    }
+
+                                    @@keyframes typing {
+                                        10%, 15%, 30%, 35%, 50%, 55%, 70%, 75%, 90%, 95% {
+                                            width: 0;
+                                        }
+
+                                        5%, 20%, 25%, 40%, 45%, 60%, 65%, 80%, 85% {
+                                            width: calc(100% + 8px);
+                                        }
+                                    }
+                                </style>
+                                <div class="animated-text">
+                                     <span></span>
+                                </div>
+
+                            </div>
+                            Based on your RANK you have won
+                            <div class="text-danger display-4 fs-5 mb-2 fw-normal font-sans-serif"><span>&#8377; @dt.Rows[0]["Cash"]</span></div>
+                        </div>
+
+                        <div class="col-12 col-md-8">
+                            <strong>Terms &amp; Conditions</strong>
+                            <ul>
+                                <li> Cash Scholarship Reward will be paid by Cheque/RTGS (Nationalised Banks) in the student’s name only.</li>
+                                <li>Cheques of All India Top 20 students of each class will be given “only” in Felicitation Ceremony (SPS - Success Power Session) (subject to student data verification).</li>
+                                <li>Date with invitation of Felicitation Ceremony (SPS - Success Power Session) will be informed later (No cheque will be given to students without attending Felicitation Ceremony (SPS - Success Power Session)).</li>
+                                <li>RTGS of Cash Reward to the students who secured All India Rank 21 and above will be processed on or before <strong>31<sup>st</sup> January, 2024</strong> (subject to student document verification).</li>
+                                <li>Student document verification includes submission of authentic proof of (1) Student's current class (2) Photo (3) Bank Account.</li>
+                                <li>The details of The Felicitation Ceremony will be shared through Phone/SMS on the Registered Mobile No. of Student.</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <partial name="Component/_DocUpload" model="Model" />
+                </div>
+            </div>
+
+
+        </div>
+
+
+    }
+}

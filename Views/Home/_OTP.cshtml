@@ -1,0 +1,59 @@
+﻿@model TallentexResult.Entities.StudentMain
+
+<div class="modal fade" id="otpModal" tabindex="-1" role="dialog" aria-labelledby="otpModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form asp-action="otp" method="post">
+                <div class="modal-header">
+                    <h4 class="modal-title flex-fill" id="otpModalLabel">One Time Password</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <div class="form-group">
+                        <div class="alert alert-info">
+                            <ul>
+                                <li>You are required to enter OTP (One Time Password) sent on provided mobile number.</li>
+                                <li>Usually OTP sent, deliveres instantly, but sometimes it may take longer depending upon the network. Kindly wait for the same till you receive it.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="otp" class="col-form-label">OTP:</label>
+                        <input type="tel" class="form-control" id="otp" name="otp" maxlength='10' autofocus onkeypress='return onlyDigits(event);' pattern='[0-9]*' inputmode='numeric' required>
+                    </div>
+                    <div>
+                        <input type="hidden" asp-for="Fno" value="@Model.Fno" />
+                    </div>
+                    @if (ViewData["Message"] != null)
+                    {
+                        <div class="@ViewData["MsgClass"] mt-1">
+                            @ViewData["Message"]
+                        </div>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> 
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script type='text/javascript'>
+    window.addEventListener('load', function (event) {
+        {
+            $('#otpModal').modal('toggle');
+
+            $('#otpModal').on('shown.bs.modal', function () {
+                {
+                    $(this).find('#otp').focus();
+                }
+            });
+        }
+    });
+</script>

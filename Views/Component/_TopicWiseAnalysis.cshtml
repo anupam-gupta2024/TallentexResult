@@ -1,0 +1,109 @@
+﻿@using System.Data
+@using TallentexResult.Servies
+@model TallentexResult.Entities.StudentMain
+
+@if (Model.ds3 != null && Model.ds3.Tables.Count > 1)
+{
+    Global objGlobal = new Global();
+    DataTable dtTopicwise = Model.ds3.Tables[1];
+    if (dtTopicwise != null && dtTopicwise.Rows.Count > 0)
+    {
+        int i = 0;
+
+
+        <div class="row page-break">
+            <div class="break"></div>
+            <div class="col-md-12 col-lg-12 col-xl-12 d-flex pt-20">
+                <img style="width:100%;border-radius:10px 10px 0 0;" src="~/images/performance_strip.png" />
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title text-center">Topicwise Analysis</h6>
+            </div>
+            <div class="card-content collapse show">
+                <div class="card-body">
+
+                    @foreach (DataRow row1 in (new DataView(dtTopicwise).ToTable(true, "SubjectTitle")).Rows)
+                    {
+                        i++;
+                        DataView dv = new DataView(dtTopicwise);
+                        dv.RowFilter = "SubjectTitle='" + row1["SubjectTitle"] + "'";
+                        DataTable dtSubjectwise = dv.ToTable();
+
+                        if (dtSubjectwise != null && dtSubjectwise.Rows.Count > 0)
+                        {
+                            int correct = objGlobal.Sum(dtSubjectwise, "Correct");
+                            int inCorrect = objGlobal.Sum(dtSubjectwise, "InCorrect");
+                            int unattempt = objGlobal.Sum(dtSubjectwise, "Unattempt");
+                            int totalQuestion = objGlobal.Sum(dtSubjectwise, "TotalQuestion");
+                            var per_correct = (double)correct * 100 / totalQuestion;
+
+                            if (i == 3 || i == 5)
+                            {
+                                @Html.Raw("</div></div></div>")
+                                @Html.Raw("<div class='row page-break'><div class='break'></div><div class='col-md-12 col-lg-12 col-xl-12 d-flex pt-20'></div></div>")
+                                @Html.Raw("<div class='card'>")
+
+                                @Html.Raw("<div class='card-header'>")
+                                @Html.Raw("<h6 class='card-title text-center'>Topicwise Analysis</h6>")
+                                @Html.Raw("</div>")
+
+                                @Html.Raw("<div class='card-content collapse show'><div class='card-body'>")
+                            }
+
+                            <div class="st-card st-c@(i)">
+                                <div class="stats-info">
+                                    <div class="text-left">
+                                        <h5>@row1["SubjectTitle"].ToString().Replace("IQ", "Mental Ability") <span class="badge">Correct @correct / Out of @totalQuestion</span></h5>
+                                    </div>
+
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-animated  bg-primary progress-bar-striped" role="progressbar" style="width: @per_correct%" aria-valuenow="@per_correct" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*<h3 class="card-title mt-2 mb-0">@row1["SubjectTitle"].ToString().Replace("IQ", "Mental Ability")</h3>*@
+                            <div class="table-responsive">
+                                <table class="dataTable1 table table-striped table-sm mb-0 text-center">
+                                    <thead>
+                                        <tr>
+                                            <th width="60%" class="text-left">Topic</th>
+                                            <th width="10%">Correct</th>
+                                            <th width="10%">Incorrect</th>
+                                            <th width="10%">Left</th>
+                                            <th width="10%" class="text-nowrap">Out of</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (DataRow row in dtSubjectwise.Rows)
+                                        {
+                                            <tr>
+                                                <th class="text-left">@(row["TopicTitle"].ToString().Length > 70 ? row["TopicTitle"].ToString().Substring(0, 70).Trim() : row["TopicTitle"].ToString().Trim())</th>
+                                                <th>@row["Correct"]</th>
+                                                <th>@row["InCorrect"]</th>
+                                                <th>@row["Unattempt"]</th>
+                                                <th>@row["TotalQuestion"]</th>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th class="text-left">Total</th>
+                                            <th>@correct</th>
+                                            <th>@inCorrect</th>
+                                            <th>@unattempt</th>
+                                            <th>@totalQuestion</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    }
+}

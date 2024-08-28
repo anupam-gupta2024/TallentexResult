@@ -1,0 +1,238 @@
+﻿@using System.Data
+@using TallentexResult.Servies
+@model TallentexResult.Entities.StudentMain
+
+@{
+    ViewData["Title"] = "Performance Analysis";
+    Layout = null;
+
+    Global objGlobal = new Global();
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Tallentex-@LNResources.Session Result</title>
+
+
+    <link href="https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,600,600i,700,700i|Comfortaa:300,400,500,700" rel="stylesheet">
+    <!-- BEGIN Custom CSS-->
+    <link rel="stylesheet" href="~/css/analysis.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+    @* <link rel="stylesheet" type="text/css" href="~/css/progress-wizard.css"> *@
+    <!-- END Custom CSS-->
+
+    <script type="text/javascript">
+        window.history.forward();
+        function noBack() {
+            window.history.forward();
+        }
+    </script>
+
+    @* <script type="text/javascript">
+    function preventBack() {
+    window.history.forward();
+    }
+
+    setTimeout("preventBack()", 0);
+
+    window.onunload = function () { null };
+    </script> *@
+
+</head>
+
+<body class="vertical-layout" oncopy="return false" oncut="return false" onpaste="return false">
+
+    <div class="app-content content page-wraper">
+        <div class="content-wrapper content container-fluid">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                @if (Model.ds1 != null)
+                {
+                    if (Model.ds1.Tables.Count > 0)
+                    {
+                        DataTable dt = Model.ds1.Tables[0];
+                        if (dt != null && dt.Rows.Count > 0)
+                        {
+                            <div class="row">
+                                <div class="col-12 col-md-12">
+                                    <div class="mb-2 card">
+                                        <div class="position-relative min-vh-25 mb-7 card-header">
+                                            <div class="bg-holder rounded-3 rounded-bottom-0 analysis-head-image"></div>
+                                            <div class="avatar avatar-5xl avatar-profile">
+                                                <img class="rounded-circle img-thumbnail shadow-sm" src="@ViewBag.Photo" alt="">
+                                            </div>
+                                            <div class="text-center position-relative">
+                                                <h1 class="text-white">TALLENTEX @LNResources.Session</h1>
+                                                <h4 class="text-white">@ViewData["Title"]</h4>
+                                            </div>
+                                        </div>
+
+                                        <div class="dropdown" tabindex="1">
+                                            <a class="dropbtn text-white"><i class="la la-ellipsis-v"></i></a>
+                                            <div class="dropdown-content">
+                                                <a class="dropdown-item" href="javascript:window.print();">Print</a>
+                                            </div>
+                                        </div>
+
+                                        <div class="card-body">
+
+                                            <div class="row">
+                                                <div class="col-lg-8">
+                                                    <h4 class="mb-1">
+                                                        @dt.Rows[0]["StudentName"]
+                                                    </h4>
+                                                    <h5 class="fs-9 fw-normal">Roll No. @objGlobal.Capitalize(dt.Rows[0]["AppFormNo"].ToString() ?? "")</h5>
+                                                    <p class="text-500">Present Class @objGlobal.ToRoman((int)dt.Rows[0]["Class"])</p>
+                                                    <button type="button" class="px-3 btn btn-falcon-primary btn-sm">Exam Date @dt.Rows[0]["testdate"]</button>
+                                                    <button type="button" class="px-3 ms-2 btn btn-falcon-default btn-sm">Exam Mode @objGlobal.Capitalize(dt.Rows[0]["exammode"].ToString() ?? "")</button>
+
+                                                    <div class="border-dashed border-bottom my-4 d-lg-none"></div>
+                                                </div>
+                                                <div class="ps-2 ps-lg-3 col">
+                                                    <div class="link-900">
+                                                        <div class="d-flex align-items-center mb-2">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                                 fill="currentColor" class="bi bi-award-fill bg-success white rounded-circle" viewbox="0 0 16 16">
+                                                                <path d="m8 0 1.669.864 1.858.282.842 1.68 1.337 1.32L13.4 6l.306 1.854-1.337 1.32-.842 1.68-1.858.282L8 12l-1.669-.864-1.858-.282-.842-1.68-1.337-1.32L2.6 6l-.306-1.854 1.337-1.32.842-1.68L6.331.864 8 0z"></path>
+                                                                <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"></path>
+                                                            </svg>
+                                                            <div class="flex-1 ml-1">
+                                                                <h6 class="mb-0">All India Rank</h6>
+                                                                <h2>@(dt.Rows[0]["Rank"].ToString() == "0" ? "NA" : dt.Rows[0]["Rank"])</h2>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    @if (dt.Columns.Contains("exammode") && dt.Rows[0]["exammode"].ToString()?.ToUpper() == "ONLINE")
+                                                    {
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="link-900">
+                                                            <div class="d-flex align-items-center mb-2">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                                     fill="currentColor" class="bi bi-award-fill bg-warning white rounded-circle" viewbox="0 0 16 16">
+                                                                    <path d="m8 0 1.669.864 1.858.282.842 1.68 1.337 1.32L13.4 6l.306 1.854-1.337 1.32-.842 1.68-1.858.282L8 12l-1.669-.864-1.858-.282-.842-1.68-1.337-1.32L2.6 6l-.306-1.854 1.337-1.32.842-1.68L6.331.864 8 0z"></path>
+                                                                    <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"></path>
+                                                                </svg>
+                                                                <div class="flex-1 ml-1">
+                                                                    <h6 class="mb-0">Zonal Rank @("(" + dt.Rows[0]["TZone"].ToString()?.Replace("Zone", "").Trim() + ")")</h6>
+                                                                    <h2>@dt.Rows[0]["ZonalRK"]</h2>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="link-900">
+                                                            <div class="d-flex align-items-center">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                                                                     fill="currentColor" class="bi bi-award-fill bg-primary white rounded-circle" viewbox="0 0 16 16">
+                                                                    <path d="m8 0 1.669.864 1.858.282.842 1.68 1.337 1.32L13.4 6l.306 1.854-1.337 1.32-.842 1.68-1.858.282L8 12l-1.669-.864-1.858-.282-.842-1.68-1.337-1.32L2.6 6l-.306-1.854 1.337-1.32.842-1.68L6.331.864 8 0z"></path>
+                                                                    <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"></path>
+                                                                </svg>
+                                                                <div class="flex-1 ml-1">
+                                                                    <h6 class="mb-0">State Rank @("(" + dt.Rows[0]["TState"].ToString() + ")")</h6>
+                                                                    <h2>@dt.Rows[0]["StateRK"]</h2>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <partial name="../Component/_CashPrize" model="Model" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <partial name="../Component/_ChartPercentage" model="Model" />
+                                </div>
+
+                                <div class="col-lg-6">
+                                    <partial name="../Component/_ChartMarks" model="Model" />
+                                </div>
+                            </div>
+
+                            <partial name="_PageBreak" />
+
+
+                            <div class="row">
+                                <div class="col-12 col-md-12">
+                                    <div class="mb-2 card">
+                                        <div class="card-body">
+                                            <div id="container" style="height: 400px;"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 col-md-12">
+                                    <partial name="../Component/_ScoreCard" model="Model" />
+                                </div>
+                            </div>
+
+                            <partial name="_PageBreak" />
+
+                            <div class="row">
+                                <div class="col-12 col-md-12">
+                                    <partial name="../Component/_CSI" model="Model" />
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 col-md-12">
+                                    <partial name="../Component/_Difficulty" model="Model" />
+                                </div>
+                            </div>
+
+                            <partial name="_PageBreak" />
+
+                            <div class="row">
+                                <div class="col-12 col-md-12">
+                                    <partial name="../Component/_TopicWiseAnalysisChart" model="Model" />
+
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-12 col-md-12">
+                                    <partial name="../Component/_TopicWiseAnalysis" model="Model" />
+
+                                </div>
+                            </div>
+
+                        }
+                    }
+                }
+            </div>
+        </div>
+    </div>
+
+    <partial name="../Jquery/_ApexChart" />
+
+    <partial name="../Jquery/_ChartJs" />
+
+    <partial name="../Jquery/_HighChart" />
+
+
+    <!-- BEGIN PAGE VENDOR JS-->
+    <script src="~/app-assets/vendors/js/timeline/horizontal-timeline.js" type="text/javascript"></script>
+    <!-- END PAGE VENDOR JS-->
+    <!-- BEGIN MODERN JS-->
+    <script src="~/app-assets/js/core/app-menu.js" type="text/javascript"></script>
+    <script src="~/app-assets/js/core/app.js" type="text/javascript"></script>
+    <!-- END MODERN JS-->
+</body>
+</html>

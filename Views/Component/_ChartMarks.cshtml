@@ -1,0 +1,32 @@
+﻿@using System.Data
+@model TallentexResult.Entities.StudentMain
+
+
+@if (Model.ds2 != null && Model.ds2.Tables.Count > 0)
+{
+    DataTable dtresult = Model.ds2.Tables[0];
+    decimal totper = (decimal)dtresult.Rows[0]["per"];
+
+    <div class="card" style="height:460px;">
+        <div class="card-content collapse show">
+            <div class="card-header">
+                <div class="box-title">
+                    <small class="pull-right @(TallentexResult.Servies.Performance.getColor(totper))">
+                        <i class="icon-arrow-up"></i> @(TallentexResult.Servies.Performance.getAchievement(totper))
+                    </small><strong>Student Result <sup class="text-purple">(Score)</sup></strong>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div style="height:360px;">
+                    <canvas id="chartjs_polar"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+
+
+

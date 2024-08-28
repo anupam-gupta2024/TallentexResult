@@ -1,0 +1,101 @@
+﻿@model TallentexResult.Entities.StudentMain
+@using System.Data
+
+@{
+    ViewData["Title"] = "ALLEN Admission Info";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="transactions-table-th d-none d-md-block">
+    <div class="col-12">
+        <div class="row px-1">
+            <div class="col-md-12 col-12 py-1">
+                <h6 class="mb-0 text-primary text-capitalize">For Students seeking Admission in ALLEN for session 2025-26 :</h6>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (Model.ds1 != null && Model.ds1.Tables.Count > 0)
+{
+    DataTable dt = Model.ds1.Tables[0];
+    if (dt != null && dt.Rows.Count > 0)
+    {
+        if (dt.Rows[0]["Qualified"].ToString() == "F")
+        {
+            <div class="row">
+                <div class="col-12 col-md-12">
+                    <div class="card">
+                        <div class="bg-holder bg-card" style="background-image: url(&quot;/images/background/danger.png&quot;);"></div>
+                        <div class="card-content collapse show position-relative">
+                            <div class="card-body">
+                                <div class="alert alert-danger">
+                                    Dear Student, Your performance in TALLENTEX-@LNResources.Session was not satisfactory and you have not cleared minimum acceptable benchmark for offering admission in any ALLEN Course. You are advised to thoroughly prepare for your present class syllabus again and appear in forthcoming ASAT(ALLEN Scholarship Admission Test) for better chances of getting admission in ALLEN Courses.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-12 col-md-6 offset-md-2">
+                    <div class="mb-1">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <label class="form-label">Choose Mode of study:</label>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <select name="Mode" id="Mode" class="form-control" asp-items="@(new SelectList(ViewBag.Mode, "Value", "Text"))"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="divCenterSelect" class="mb-2" style="display:none;">
+                        <div class="row">
+                            <div class="col-12 col-md-4">
+                                <label class="form-label">Choose ALLEN Center where you want to study:</label>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <select name="Center" id="Center" class="form-control" asp-items="@(new SelectList(ViewBag.Center, "Value", "Text"))"></select>
+                                <input type="hidden" asp-asp-for="Fno" id="Fno" value="@Model.Fno" />
+                                <input type="hidden" asp-asp-for="Class" id="Class" value="@Model.Class" />
+                            </div>
+                        </div>
+                    </div>
+                    <div id="divIFAMessage" class="text-center"></div>
+                </div>
+            </div>
+        }
+    }
+}
+
+
+
+<div class="row">
+    <div class="col-12 col-md-12">
+        <partial name="../Component/_Scholarship" model="Model" />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 col-md-12">
+        <partial name="Component/_CourseOnline" model="Model" />
+        <partial name="Component/_CourseOffline" model="Model" />
+    </div>
+</div>
+
+
+@section Scripts {
+    <script src="~/js/ifa/scholarship.js"></script>
+    <script src="~/js/ifa/course.js"></script>
+    <script src="~/js/ifa/coursefee.js"></script>
+    <script src="~/js/ifa/app.js"></script>
+
+    <script>
+        window.addEventListener("load", function (event) {
+            $("#btnprintscholarship").show();
+        });
+    </script>
+}

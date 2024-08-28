@@ -1,0 +1,32 @@
+﻿@using System.Data
+@model TallentexResult.Entities.StudentMain
+
+<div id="divOfflineCourse" style="display:none;">
+    <div class="card">
+        <div class="card-content collapse show">
+            <div class="card-header">
+                <h6 class="card-title text-center">Course Details</h6>
+            </div>
+            <div class="card-body">
+                <div class="mb-2">
+                    <div class="divAboveSch" style="display:none;">
+                        To see FEE after SCHOLARSHIP & SPECIAL BENEFITS, click on Course Fee in the table below.
+                        <br />
+                    </div>
+                    <p id="divPhaseTitle"></p>
+                </div>
+                <div class="table-responsive">
+                    <table id="tableCourse" width="100%" class="dataTable table table-striped table-sm">
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <partial name="Component/_CourseFeeList" model="Model" />
+
+    <partial name="Component/_ApplyALLEN" model="Model" />
+
+    <partial name="Component/_CouponCode" model="Model" />
+</div>
+

@@ -1,0 +1,153 @@
+﻿@using System.Data
+@model TallentexResult.Entities.StudentMain
+
+
+@if (Model.ds2 != null && Model.ds2.Tables.Count > 0)
+{
+    DataTable dtresult = Model.ds2.Tables[0];
+
+    <div class="card overflow-hidden">
+        <div class="card-content collapse show">
+            <div class="card-header">
+                <h6 class="card-title text-center">Score Card (Exam Mode : @Model.ds1.Tables[0].Rows[0]["exammode"])</h6>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover table-striped mb-0 text-center">
+                        <thead>
+                            <tr>
+                                <th class="border-top-0"></th>
+                                <th class="border-top-0">Physics</th>
+                                <th class="border-top-0">Chemistry</th>
+                                <th class="border-top-0">Maths</th>
+                                <th class="border-top-0">Biology</th>
+                                <th class="border-top-0">Mental Ability</th>
+                                <th class="border-top-0">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-left">
+                                    Maximum Marks
+                                </td>
+                                <td>
+                                    @dtresult.Rows[0]["PhyMM"]
+                                </td>
+                                <td>
+                                    @dtresult.Rows[0]["ChemMM"]
+                                </td>
+                                <td>
+                                    @dtresult.Rows[0]["MathMM"]
+                                </td>
+                                <td>
+                                    @dtresult.Rows[0]["BioMM"]
+                                </td>
+                                <td>
+                                    @dtresult.Rows[0]["MaMM"]
+                                </td>
+                                <td>
+                                    @dtresult.Rows[0]["TotalMM"]
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">
+                                    Average Score
+                                </td>
+                                <td>
+                                    @dtresult.Rows[0]["PhyAvg"]
+                                </td>
+                                <td>
+                                    @dtresult.Rows[0]["ChemAvg"]
+                                </td>
+                                <td>
+                                    @dtresult.Rows[0]["MathAvg"]
+                                </td>
+                                <td>
+                                    @dtresult.Rows[0]["BioAvg"]
+                                </td>
+                                <td>
+                                    @dtresult.Rows[0]["MaAvg"]
+                                </td>
+                                <td>
+                                    @dtresult.Rows[0]["TotalAvg"]
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="text-left">
+                                    Highest Score
+                                </td>
+                                <td>
+                                    @dtresult.Rows[0]["PhyH"]
+                                </td>
+                                <td>
+                                    @dtresult.Rows[0]["ChemH"]
+                                </td>
+                                <td>
+                                    @dtresult.Rows[0]["MathH"]
+                                </td>
+                                <td>
+                                    @dtresult.Rows[0]["BioH"]
+                                </td>
+                                <td>
+                                    @dtresult.Rows[0]["MaH"]
+                                </td>
+                                <td>
+                                    @dtresult.Rows[0]["TotalH"]
+                                </td>
+                            </tr>
+                            <tr>
+                                <th class="text-left">
+                                    Your Score
+                                </th>
+                                <th>
+                                    @dtresult.Rows[0]["Phy"]
+                                </th>
+                                <th>
+                                    @dtresult.Rows[0]["Chem"]
+                                </th>
+                                <th>
+                                    @dtresult.Rows[0]["Math"]
+                                </th>
+                                <th>
+                                    @dtresult.Rows[0]["Bio"]
+                                </th>
+                                <th>
+                                    @dtresult.Rows[0]["MA"]
+                                </th>
+                                <th>
+                                    @dtresult.Rows[0]["Total"]
+                                </th>
+                            </tr>
+                            @if (Model.ds1.Tables[0].Rows[0]["Qualified"].ToString() != "F")
+                            {
+                                <tr>
+                                    <th class="text-left">
+                                        Your Percentage
+                                    </th>
+                                    <th>
+                                        @dtresult.Rows[0]["PhyPer"]
+                                    </th>
+                                    <th>
+                                        @dtresult.Rows[0]["ChemPer"]
+                                    </th>
+                                    <th>
+                                        @dtresult.Rows[0]["MathPer"]
+                                    </th>
+                                    <th>
+                                        @dtresult.Rows[0]["BioPer"]
+                                    </th>
+                                    <th>
+                                        @dtresult.Rows[0]["MAPer"]
+                                    </th>
+                                    <th>
+                                        @dtresult.Rows[0]["Per"]
+                                    </th>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}

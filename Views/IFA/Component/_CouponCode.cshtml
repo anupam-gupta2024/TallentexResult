@@ -1,0 +1,55 @@
+﻿@using System.Data
+@model TallentexResult.Entities.StudentMain
+
+
+@if (Model.ds1 != null && Model.ds1.Tables.Count > 0)
+{
+    DataTable dt = Model.ds1.Tables[0];
+
+    @if (!string.IsNullOrEmpty(dt.Rows[0]["PromoCode"].ToString()))
+    {
+        <div class="card">
+            <div class="bg-holder bg-card" style="background-image: url(&quot;/images/background/info.png&quot;);"></div>
+            <div class="card-content collapse show position-relative">
+                <div class="card-body">
+                    <div><strong>Your UNIQUE CODE to get ALLEN Application Form at Subsidised Fee:</strong></div>
+                    <h3 class="text-danger">@dt.Rows[0]["PromoCode"]</h3>
+                    @if (dt.Rows[0]["CLASS"].ToString() != "5")
+                    {
+                        <p>(not applicable for existing ALLEN Students)</p>
+                    }
+                    <div><strong>Terms &amp; Conditions</strong></div>
+                    <ol>
+                        <li>This UNIQUE CODE will be applicable upon purchase of ALLEN Classroom Course Application Form of Session @LNResources.AcademicSession.</li>
+                        <li>
+                            With this UNIQUE CODE, the fee of Application Form will be
+                            <ul>
+
+
+                                <li>
+                                    Through ALLEN Website: ₹ 300/- instead of its actual fee of ₹ 500/-
+                                </li>
+                                <li>
+                                    Through OMR Application Form: ₹ 500/- instead of its actual fee of ₹ 700/-
+                                </li>
+
+
+
+
+                            </ul>
+                        </li>
+                        <li>Submit this UNIQUE CODE along with your Tallentex Admit Card / Your Tallentex Score Card at any ALLEN Form Issue Counter or submit Online while purchasing Application Form.</li>
+                        <li>
+                            This is your personal UNIQUE CODE and it can NOT be used by anyone else.
+                            <ul>
+                                <li>It is Non-Transferable.</li>
+                                <li>If found at any stage later that an applicant has submitted UNIQUE CODE of someone else then the purchased Application Form will be cancelled without refund. A new form will have to be purchased by the applicant by paying full Application Form fee (i.e. &#8377; 700/-).</li>
+                            </ul>
+                        </li>
+                        <li><b>Application Form purchased with this UNIQUE CODE can NOT be used to appear in any ASAT (ALLEN Scholarship Admission Test).</b></li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    }
+}

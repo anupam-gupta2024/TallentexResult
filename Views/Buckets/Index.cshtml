@@ -1,0 +1,9 @@
+﻿@if (ViewBag.Buckets != null)
+{
+    <ol>
+        @foreach (Amazon.S3.Model.S3Bucket d in ViewBag.Buckets)
+        {
+            <li>@d.BucketName</li>
+        }
+    </ol>
+}

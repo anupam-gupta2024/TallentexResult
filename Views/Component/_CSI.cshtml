@@ -1,0 +1,88 @@
+﻿@using System.Data
+@model TallentexResult.Entities.StudentMain
+
+
+
+@if (Model.ds2.Tables.Count > 1)
+{
+    DataTable dt2 = Model.ds2.Tables[1];
+    if (dt2 != null && dt2.Rows.Count > 0)
+    {
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title text-center">CSI or Competitive Success Index</h6>
+            </div>
+            <div class="card-content collapse show">
+                <div class="card-body">
+                    @for (int i = 0; i < dt2.Rows.Count; i++)
+                    {
+                        if (i != 0)
+                        {
+                            <hr />
+                        }
+                        string value = (dt2.Rows[i]["csivalue"].ToString() == "<b style=\"color:#000000;\">less than</b> 3.0" ? "2" : dt2.Rows[i]["csivalue"].ToString() ?? "");
+                        var progress = Math.Round(decimal.Parse(value) * 10, 0);
+                        var progress_colors = TallentexResult.Servies.Performance.getColor(progress);
+                        if (!string.IsNullOrEmpty(progress_colors))
+                        {
+                            progress_colors = "progress-bar-" + progress_colors;
+                        }
+
+                        <div class="experience-box">
+                            <ul class="experience-list">
+                                <li>
+                                    <div class="experience-user">
+                                        <div class="before-circle"></div>
+                                    </div>
+                                    <div class="experience-content">
+                                        <div class="timeline-content">
+                                            <div class="font-small-3 clearfix name">
+                                                <span class="float-left">@Html.Raw(dt2.Rows[i]["csititle"])</span>
+                                                <span class="float-right">@Html.Raw(dt2.Rows[i]["csivalue"])</span>
+                                            </div>
+                                            <div class="progress my-1 progress-sm box-shadow-2">
+                                                <div class="progress-bar progress-bar-striped progress-bar-animated @progress_colors" role="progressbar" style="width: @(double.Parse(value)*10)%" aria-valuenow="@progress" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                            <div class="font-small-3 clearfix time">
+                                                <span class="float-left">@Html.Raw(dt2.Rows[i]["remarks"])</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    }
+@* 
+                    @for (int i = 0; i < dt2.Rows.Count; i++)
+                    {
+                        if (i != 0)
+                        {
+                            <hr />
+                        }
+                        string value = (dt2.Rows[i]["csivalue"].ToString() == "<b style=\"color:#000000;\">less than</b> 3.0" ? "2" : dt2.Rows[i]["csivalue"].ToString() ?? "");
+                        var progress = Math.Round(decimal.Parse(value) * 10, 0);
+                        var progress_colors = TallentexResult.Servies.Performance.getColor(progress);
+                        if (!string.IsNullOrEmpty(progress_colors))
+                        {
+                            progress_colors = "progress-bar-" + progress_colors;
+                        }
+
+
+                        <div class="font-small-3 clearfix">
+                            <span class="float-left">@Html.Raw(dt2.Rows[i]["csititle"])</span>
+                            <span class="float-right">@Html.Raw(dt2.Rows[i]["csivalue"])</span>
+                        </div>
+                        <div class="progress my-1 progress-sm box-shadow-2">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated @progress_colors" role="progressbar" style="width: @(double.Parse(value)*10)%" aria-valuenow="@progress" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="font-small-3 clearfix">
+                            <span class="float-left">@Html.Raw(dt2.Rows[i]["remarks"])</span>
+                        </div>
+                    } *@
+                </div>
+            </div>
+        </div>
+    }
+}
+
+

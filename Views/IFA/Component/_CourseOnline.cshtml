@@ -1,0 +1,192 @@
+﻿@using System.Data
+@model TallentexResult.Entities.StudentMain
+
+@if (Model.ds1 != null && Model.ds1.Tables.Count > 0)
+{
+    DataTable dt = Model.ds1.Tables[0];
+    if (dt != null && dt.Rows.Count > 0)
+    {
+        string class_ = dt.Rows[0]["class"].ToString() ?? "";
+
+        <div class="card" id="divOnlineCourse" style="display:none;">
+            <div class="card-content collapse show">
+                <div class="card-header">
+                    <h6 class="card-title text-center">Course Details</h6>
+                </div>
+                <div class="card-body">
+                    <div class="mb-2">
+                        <div class="divAboveSch" style="display:none;">
+                            Above scholarship will be applicable on the early bird pricing on
+                            <a href="https://allen.in/" target="_blank" class="alert-link">https://allen.in/</a> till 20th December 2023.
+                            <br />
+                        </div>
+                        For Admission and Course Details <a href="https://allen.in/" target="_blank" class="btn btn-sm btn-primary">
+                            Click here
+                            <i class="icon-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="table-responsive">
+                        @if (class_ == "5")
+                        {
+                            <table width="100%" class="dataTable table table-striped table-sm mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Stream</th>
+                                        <th>Course Title (Code)</th>
+                                        <th>Course Start Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>PNCF: Foundation Ultimate</td><td>Foundation JEE-NEET (Live) & Olympiads (Recorded)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Foundation Ultimate</td><td>Foundation JEE-NEET (Live) & NCERT (Recorded)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: NCERT</td><td>NCERT Concept Building (Live): All Subjects</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: NCERT</td><td>NCERT Concept Building (Live): Maths & Science</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: NCERT</td><td>NCERT Concept Building (Live): Maths</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad Ultimate</td><td>Olympiads Live + NCERT Recorded (All Subjects)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad Ultimate</td><td>Olympiads Live + NCERT Recorded (Maths & Science)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad Ultimate</td><td>Olympiads Live + NCERT Recorded (Science)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad Ultimate</td><td>Olympiads Live + NCERT Recorded (Maths)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad & Boards Ultimate</td><td>Olympiads Live +NCERT Live</td><td>05-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad & Boards Ultimate</td><td>Olympiads Live +ICSE Live</td><td>05-Apr-2024</td></tr>
+
+                                </tbody>
+                            </table>
+                        }
+                        else if (class_ == "6")
+                        {
+                            <table width="100%" class="dataTable table table-striped table-sm mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Stream</th>
+                                        <th>Course Title (Code)</th>
+                                        <th>Course Start Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>PNCF: Foundation Ultimate</td><td>Foundation JEE-NEET (Live) & Olympiads (Recorded)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Foundation Ultimate</td><td>Foundation JEE-NEET (Live) & NCERT (Recorded)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: NCERT</td><td>NCERT Concept Building (Live): All Subjects</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: NCERT</td><td>NCERT Concept Building (Live): Maths & Science</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: NCERT</td><td>NCERT Concept Building (Live): Maths</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad Ultimate</td><td>Olympiads Live + NCERT Recorded (All Subjects)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad Ultimate</td><td>Olympiads Live + NCERT Recorded (Maths & Science)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad Ultimate</td><td>Olympiads Live + NCERT Recorded (Science)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad Ultimate</td><td>Olympiads Live + NCERT Recorded (Maths)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad & Boards Ultimate</td><td>Olympiads Live +NCERT Live</td><td>05-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad & Boards Ultimate</td><td>Olympiads Live +ICSE Live</td><td>05-Apr-2024</td></tr>
+
+                                </tbody>
+                            </table>
+                        }
+                        else if (class_ == "7")
+                        {
+                            <table width="100%" class="dataTable table table-striped table-sm mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Stream</th>
+                                        <th>Course Title (Code)</th>
+                                        <th>Course Start Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>PNCF: Foundation Ultimate</td><td>Foundation JEE-NEET (Live) & Olympiads (Recorded)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Foundation Ultimate</td><td>Foundation JEE-NEET (Live) & NCERT (Recorded)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: NCERT</td><td>NCERT Concept Building (Live): All Subjects</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: NCERT</td><td>NCERT Concept Building (Live): Maths & Science</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: NCERT</td><td>NCERT Concept Building (Live): Maths</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad Ultimate</td><td>Olympiads Live + NCERT Recorded (All Subjects)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad Ultimate</td><td>Olympiads Live + NCERT Recorded (Maths & Science)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad Ultimate</td><td>Olympiads Live + NCERT Recorded (Science)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad Ultimate</td><td>Olympiads Live + NCERT Recorded (Maths)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad & Boards Ultimate</td><td>Olympiads Live +NCERT Live</td><td>05-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad & Boards Ultimate</td><td>Olympiads Live +ICSE Live</td><td>05-Apr-2024</td></tr>
+
+                                </tbody>
+                            </table>
+                        }
+                        else if (class_ == "8")
+                        {
+                            <table width="100%" class="dataTable table table-striped table-sm mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Stream</th>
+                                        <th>Course Title (Code)</th>
+                                        <th>Course Start Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>PNCF: Foundation Ultimate</td><td>Foundation JEE (Live) & Olympiads (Recorded)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Foundation Ultimate</td><td>Foundation NEET (Live) & Olympiads (Recorded)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Foundation Ultimate</td><td>Foundation JEE (Live) & NCERT (Recorded)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Foundation Ultimate</td><td>Foundation NEET (Live) & NCERT (Recorded)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: NCERT</td><td>NCERT Concept Building (Live): All Subjects</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: NCERT</td><td>NCERT Concept Building (Live): Maths & Science</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: NCERT</td><td>NCERT Concept Building (Live): Maths</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad Ultimate</td><td>Olympiads Live + NCERT Recorded (All Subjects)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad Ultimate</td><td>Olympiads Live + NCERT Recorded (Maths & Science)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad Ultimate</td><td>Olympiads Live + NCERT Recorded (Science)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad Ultimate</td><td>Olympiads Live + NCERT Recorded (Maths)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad & Boards Ultimate</td><td>Olympiads Live +NCERT Live</td><td>05-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad & Boards Ultimate</td><td>Olympiads Live +ICSE Live</td><td>05-Apr-2024</td></tr>
+
+                                </tbody>
+                            </table>
+                        }
+                        else if (class_ == "9")
+                        {
+                            <table width="100%" class="dataTable table table-striped table-sm mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Stream</th>
+                                        <th>Course Title (Code)</th>
+                                        <th>Course Start Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>PNCF: Foundation Ultimate</td><td>Foundation JEE (Live) & Olympiads (Recorded)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Foundation Ultimate</td><td>Foundation NEET (Live) & Olympiads (Recorded)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Foundation Ultimate</td><td>Foundation JEE (Live) & NCERT (Recorded)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Foundation Ultimate</td><td>Foundation NEET (Live) & NCERT (Recorded)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: NCERT</td><td>NCERT Concept Building (Live): All Subjects</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: NCERT</td><td>NCERT Concept Building (Live): Maths & Science</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: NCERT</td><td>NCERT Concept Building (Live): Maths</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad Ultimate</td><td>Olympiads Live + NCERT Recorded (All Subjects)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad Ultimate</td><td>Olympiads Live + NCERT Recorded (Maths & Science)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad Ultimate</td><td>Olympiads Live + NCERT Recorded (Science)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad Ultimate</td><td>Olympiads Live + NCERT Recorded (Maths)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad & Boards Ultimate</td><td>Olympiads Live +NCERT Live</td><td>05-Apr-2024</td></tr>
+                                    <tr><td>PNCF: Olympiad & Boards Ultimate</td><td>Olympiads Live +ICSE Live</td><td>05-Apr-2024</td></tr>
+
+                                </tbody>
+                            </table>
+                        }
+                        else if (class_ == "10")
+                        {
+                            <table width="100%" class="dataTable table table-striped table-sm mb-0">
+                                <thead>
+                                    <tr>
+                                        <th>Stream</th>
+                                        <th>Course Title (Code)</th>
+                                        <th>Course Start Date</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>NEET</td><td>NEET Ultimate Program : Target 2026 (English + Hindi)</td><td>22-Dec-2023</td></tr>
+                                    <tr><td>NEET</td><td>NEET Ultimate Program : Target 2026 (English + Hindi)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>NEET</td><td>NEET Ultimate Program : Target 2026 (English + Hindi)</td><td>29-Apr-2024</td></tr>
+                                    <tr><td>NEET</td><td>NEET Ultimate Program : Target 2026 (English)</td><td>01-Apr-2024</td></tr>
+                                    <tr><td>NEET</td><td>NEET Ultimate Program : Target 2026 (Gujarati)</td><td>01-Apr-2024</td></tr>
+                                    <tr><td>JEE Advanced</td><td>JEE Ultimate Program : Target 2026 (Hindi + English)</td><td>22-Dec-2023</td></tr>
+                                    <tr><td>JEE Advanced</td><td>JEE Ultimate Program : Target 2026 (Hindi + English)</td><td>08-Apr-2024</td></tr>
+                                    <tr><td>JEE Advanced</td><td>JEE Ultimate Program : Target 2026 (English)</td><td>22-Dec-2023</td></tr>
+                                    <tr><td>JEE Advanced</td><td>JEE Ultimate Program : Target 2026 (English)</td><td>01-Apr-2024</td></tr>
+
+                                </tbody>
+                            </table>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

@@ -1,0 +1,44 @@
+﻿@using System.Data
+@model TallentexResult.Entities.StudentMain
+
+
+@if (Model.ds1 != null && Model.ds1.Tables.Count > 0)
+{
+    DataTable dt = Model.ds1.Tables[0];
+
+    if (string.IsNullOrEmpty(dt.Rows[0]["multipleattempt"].ToString()))
+    {
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title">Scholarship & Special Fee Benefit</h6>
+            </div>
+            <div class="card-content collapse show">
+                <div class="card-body">
+                    <div class="px-lg-3">
+                        For SPECIAL FEE BENEFIT (SFB) and SCHOLARSHIP based on your TALLENTEX performance
+                        <a href="ifa" class="btn btn-sm btn-primary">
+                            Click here
+                            <i class="icon-arrow-right"></i>
+                        </a>
+                        <br /><br />
+                        <strong>Terms &amp; Conditions</strong>
+                        <ul>
+                            <li>
+                                Scholarship awarded can only be availed on taking admission in ALLEN's yearlong classroom and digital programmes of session 2025 at ALLEN Career Institute Pvt. Ltd.
+                            </li>
+                            <li>
+                                Students taking admission at ALLEN’s yearlong classroom and digital programmes of session 2025 can take the benefit of Special Fee Benefit if the admission is confirmed as per following dates:
+                                <ol style="list-style-type: lower-alpha;">
+                                    <li>Special Fee Benefit 1: Valid till <strong>22th December 2023</strong></li>
+                                    <li>Special Fee Benefit 2: Valid till <strong>22th January 2024</strong></li>
+                                </ol>
+                            </li>
+                            <li>Post <strong>22th January 2024</strong> the final fee structure for next academic session will be applicable</li>
+                            <li>A student is eligible for only one scholarship at a time, no two criteria can be clubbed to avail scholarship at ALLEN.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

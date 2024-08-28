@@ -1,0 +1,14 @@
+﻿@using System.Data
+@model TallentexResult.Entities.StudentMain
+
+@if (Model.ds1 != null && Model.ds1.Tables.Count > 0)
+{
+    DataTable dt = Model.ds1.Tables[0];
+    if (dt.Rows[0]["Cash"].ToString() != "0")
+    {
+        <div class="alert alert-success mb-20" role="alert">
+            <span class="pr-2" style="top:-4px;position:relative;">Congratulation! Based on your ALL INDIA RANK, you have won Cash Reward</span>
+            <h2 class="alert-heading d-inline-block">&#8377; @dt.Rows[0]["Cash"].ToString()</h2>.
+        </div>
+    }
+}

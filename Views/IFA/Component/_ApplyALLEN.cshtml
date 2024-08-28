@@ -1,0 +1,47 @@
+﻿@using System.Data
+@model TallentexResult.Entities.StudentMain
+
+@if (Model.ds1 != null && Model.ds1.Tables.Count > 0)
+{
+    DataTable dt = Model.ds1.Tables[0];
+    if (dt != null && dt.Rows.Count > 0)
+    {
+        <div class="card">
+            <div class="bg-holder bg-card" style="background-image: url(&quot;/images/background/danger.png&quot;);"></div>
+            <div class="card-content collapse show position-relative">
+               
+                <div class="card-body text-center">
+                    @if (string.IsNullOrEmpty(dt.Rows[0]["PromoCode"].ToString()))
+                    {
+                        <p>
+                            Since you are an existing ALLEN Student so you don't have to fill New Application Form for Classroom Course (Session @LNResources.AcademicSession), you can directly deposit fee.<br />To deposit fee <a href='https://www.allen.ac.in/apps2425/ttex/default' target='_blank' class='btn btn-danger btn-sm'>Click here <i class="icon-arrow-right"></i></a>
+                        </p>
+                        <p class="CommerceInterested" style="display:none;">
+                            If you are interested in COMMERCE, to get one click on the following button <a href='https://www.allen.ac.in/ace2425/AppForms/register' target='_blank' class='btn btn-danger btn-sm'>Click here<i class="icon-arrow-right"></i></a>
+                        </p>
+                    }
+                    else
+                    {
+                        <p>
+                            If you are an Existing ALLEN Student then No need to fill New Application Form for Classroom Course (Session @LNResources.AcademicSession). To deposit fee <a href='https://www.allen.ac.in/apps2425/ttex/default' target='_blank' class='btn btn-danger btn-sm'>Click here <i class="icon-arrow-right"></i></a>
+                        </p>
+                        <p class="CommerceInterested" style="display:none;">
+                            If you are interested in COMMERCE, to get one click on the following button <a href='https://www.allen.ac.in/ace2425/AppForms/register' target='_blank' class='btn btn-danger btn-sm'>Click here<i class="icon-arrow-right"></i></a>
+                        </p>
+
+                        if (dt.Rows[0]["CLASS"].ToString() == "10")
+                        {
+                            <p>Don't have an ALLEN Application Form No., to get one click on the following button<br /><a href='https://www.allen.ac.in/apps2425/ccp/register?leadtype=CCP&referral=https://www.tallentex.com' target='_blank' class='btn btn-danger btn-rounded'>Apply Online For ALLEN Classroom Course (Session @LNResources.AcademicSession)</a></p>
+                        }
+                        else
+                        {
+                            <p>Don't have an ALLEN Application Form No., to get one click on the following button<br /><a href='https://www.allen.ac.in/apps2425/ccp/register?leadtype=PNCF&referral=https://www.tallentex.com' target='_blank' class='btn btn-danger btn-rounded'>Apply Online For ALLEN Classroom Course (Session @LNResources.AcademicSession)</a></p>
+                        }
+                    }
+
+
+                </div>
+            </div>
+        </div>
+    }
+}

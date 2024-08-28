@@ -1,0 +1,235 @@
+﻿@model TallentexResult.Entities.StudentMain
+@using System.Data
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (Model.ds1 != null)
+{
+    if (Model.ds1.Tables.Count > 0)
+    {
+        DataTable dt = Model.ds1.Tables[0];
+        if (dt != null && dt.Rows.Count > 0)
+        {
+            if (ViewBag.ShowResult == "0")
+            {
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        <partial name="Component/_Profile" model="Model" />
+                    </div>
+                    <div class="col-12 col-md-8">
+                        <div class="card overflow-hidden">
+                            <div class="bg-holder bg-card" style="background-image: url(&quot;/images/background/info.png&quot;);"></div>
+                           
+                            <div class="card-content collapse show">
+                                <div class="position-relative card-body">
+                                    <p>
+                                        Hello @dt.Rows[0]["StudentName"],
+                                    </p>
+                                    <p>
+                                        We appreciate your participation in the recent online TALLENTEX @LNResources.Session. We understand the effort and dedication you put into the exam, and we want to express our gratitude for your involvement.
+                                    </p>
+                                    <p>
+                                        After careful review of the data from our proctoring vendor DigiProctor, we regret to inform you that there were discrepancies identified in your exam session, leading to an extremely low trust score. As a result, we are unable to provide you with your results and ranks, and you will not be eligible for a scholarship.
+                                    </p>
+                                    <p>
+                                        We understand that this may be disappointing, and we want to assure you that our primary goal is to maintain the integrity and fairness of the examination process. Please keep in mind that the decision is based solely on the proctoring data, and we acknowledge that technical issues or other unforeseen circumstances may have contributed to the outcome.
+                                    </p>
+                                    <p>
+                                        As a goodwill gesture, we want to <strong>offer you a coupon of flat Rs.2000 off, that will be applicable on all digital courses</strong> for <strong>Grade @(Convert.ToInt32(ViewBag.Class) + 1)</strong> available on <a href="http://allen.ac.in/" style="color: Blue; text-decoration: none;" target="_blank">allen.in</a>. You can visit <a href="http://allen.ac.in/" style="color: Blue; text-decoration: none;" target="_blank">allen.in</a>, sign-in with your tallentex registered mobile number to enrol for the courses, and this coupon will be auto-applied.
+                                    </p>
+                                    <p>
+                                        If you have any concerns or questions, please reach out to our support team at <a href="https://www.tallentex.com/contact-us" target="_blank" style="color: Blue; text-decoration: none;">contact TALLENTEX</a>. We are here to assist you and provide any clarification you may need.
+                                    </p>
+                                    <p>
+                                        We appreciate your understanding and cooperation throughout this process. We believe in your potential and wish you continued success in your academic journey. Thank you for being a part of the TALLENTEX community, and we hope to see you thrive in future endeavors.
+                                    </p>
+                                    <p>
+                                        Regards,<br />
+                                        TALLENTEX
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <script>
+                            window.addEventListener("load", function (event) {
+                                $('#divOnlineCourse').fadeIn();//
+                                $("#divOnlineCourse").show();
+                            });
+                        </script>
+                        <partial name="../IFA/Component/_CourseOnline" model="Model" />
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="row">
+                    <div class="col-12 col-md-3">
+                        <div class="info-box bg-b-green text-white">
+                            <span class="info-box-icon"><i class="icon-trophy"></i></span>
+                            <div class="info-box-content">
+                                <span class="info-box-text">All India Rank</span>
+                                <span class="info-box-number">@(dt.Rows[0]["Rank"].ToString() == "0" ? "NA" : dt.Rows[0]["Rank"])</span>
+                                <div class="progress">
+                                    <div class="progress-bar" style="width: @(100 - (double.Parse(dt.Rows[0]["Rank"].ToString()??"1") * 100 / double.Parse(dt.Rows[0]["MaxTrank"].ToString()??"1")))%"></div>
+                                </div>
+                            </div>
+                            <!-- /.info-box-content -->
+                        </div>
+                    </div>
+
+                    @if (dt.Columns.Contains("exammode") && dt.Rows[0]["exammode"].ToString()?.ToUpper() == "ONLINE")
+                    {
+                        <div class="col-12 col-md-3">
+                            <div class="info-box bg-b-blue text-white">
+                                <span class="info-box-icon"><i class="icon-star"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Trust Score Category</span>
+                                    <span class="info-box-number">@dt.Rows[0]["trustscore_category"]</span>
+                                    <div class="progress">
+                                    </div>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-12 col-md-3">
+                            <div class="info-box bg-b-yellow text-white">
+                                <span class="info-box-icon"><i class="icon-trophy"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">Zonal Rank</span>
+                                    <span class="info-box-number">@dt.Rows[0]["ZonalRK"]</span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: @(100 - (double.Parse(dt.Rows[0]["ZonalRK"].ToString()??"1") * 100 / double.Parse(dt.Rows[0]["MaxStateRk"].ToString()??"1")))%"></div>
+                                    </div>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-3">
+                            <div class="info-box bg-b-blue text-white">
+                                <span class="info-box-icon"><i class="icon-trophy"></i></span>
+                                <div class="info-box-content">
+                                    <span class="info-box-text">State Rank</span>
+                                    <span class="info-box-number">@dt.Rows[0]["StateRK"]</span>
+                                    <div class="progress">
+                                        <div class="progress-bar" style="width: @(100 - (double.Parse(dt.Rows[0]["StateRK"].ToString()??"1") * 100 / double.Parse(dt.Rows[0]["MaxZonalRK"].ToString()??"1")))%"></div>
+                                    </div>
+                                </div>
+                                <!-- /.info-box-content -->
+                            </div>
+                        </div>
+                    }
+
+                    @if (Model.ds2 != null && Model.ds2.Tables.Count > 0)
+                    {
+                        DataTable dtresult = Model.ds2.Tables[0];
+                        <div class="col-12 col-md-3">
+                            <div class="overflow-hidden card">
+                                <div class="bg-holder bg-card" style="background-image: url(&quot;/images/background/danger.png&quot;);"></div>
+                                <div class="position-relative card-body">
+                                    <div class="row">
+                                        <div class="col-12 col-md-6">
+                                            <h6>Score <span class="ml-1 badge badge-subtle-warning round">@dtresult.Rows[0]["per"]%</span></h6>
+                                            <div class="text-warning info-box-number">
+                                                <span>@dtresult.Rows[0]["Total"] / @dtresult.Rows[0]["TotalMM"]</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6">
+                                            <div class="float-right" style="width:100px;height:75px;display:inline-block;">
+                                                <canvas id="chartjs_bar"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                @if (dt.Columns.Contains("multipleattempt") && !String.IsNullOrEmpty(dt.Rows[0]["multipleattempt"].ToString()))
+                {
+                    <div class="row">
+                        <div class="col-12 col-md-12">
+                            <div class="card overflow-hidden">
+                                <div class="bg-holder bg-card" style="background-image: url(&quot;/images/background/info.png&quot;);"></div>
+
+                                <div class="card-content collapse show">
+                                    <div class="position-relative card-body">
+
+                                        <p>
+                                            Thank you for your active participation in online TALLENTEX @LNResources.Session. We appreciate the effort you've put into the exam, and we are pleased to acknowledge the multiple attempts you made to showcase your skills.
+                                        </p>
+                                        <p>
+                                            While we are delighted to provide you with the results of all your eligible attempts, as mentioned on website FAQs, the ranks, rewards and scholarships will be based on your top-performing attempt only (<strong>Roll No. @dt.Rows[0]["multipleattempt"]</strong>) among all your online exam attempts.
+                                        </p>
+                                        <p>
+                                            We want to emphasize that this approach ensures fairness and encourages students to give their best in each attempt. We understand the dedication you've shown by participating in multiple slots, and we want to assure you that your hard work is valued. Your commitment to the exam reflects your enthusiasm for learning and growth.
+                                        </p>
+                                        <p>
+                                            If you have any questions or concerns about this process, please feel free to reach out to our support team at <a href="https://www.tallentex.com/contact-us" target="_blank" style="color: Blue; text-decoration: none;">contact TALLENTEX</a>. We are here to assist you and provide any clarification you may need.
+                                            Once again, thank you for being a part of the TALLENTEX community
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        <partial name="Component/_Profile" model="Model" />
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <partial name="../Component/_ChartPercentage" model="Model" />
+                    </div>
+
+                    <div class="col-12 col-md-4">
+                        <partial name="../Component/_ChartMarks" model="Model" />
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="col-12 col-md-6">
+                        <partial name="../Component/_ScoreCard" model="Model" />
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <partial name="../Component/_CSI" model="Model" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <partial name="Component/_CashPrize" model="Model" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-md-12">
+                        <partial name="../Component/_SFB" model="Model" />
+                    </div>
+                </div>
+            }
+        }
+    }
+}
+
+<partial name="../Jquery/_ApexChart" />
+
+<partial name="../Jquery/_ChartJs" />
+

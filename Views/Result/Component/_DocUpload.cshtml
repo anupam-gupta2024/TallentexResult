@@ -1,0 +1,436 @@
+﻿@using System.Data
+@model TallentexResult.Entities.StudentMain
+@inject TallentexResult.Interface.IAmazonUploader _amazonUploader
+
+
+@if (Model.ds1 != null && Model.ds1.Tables.Count > 0)
+{
+    DataTable dt = Model.ds1.Tables[0];
+
+    if (dt.Rows[0]["Cash"].ToString() != "0" && (Convert.ToInt32(dt.Rows[0]["IsSend"].ToString()) == 1))
+    {
+        string srcdoc = _amazonUploader.srcdoc;
+        
+        var pathIcard = String.Format(srcdoc, $"icard/{Model.Fno}");
+        var pathPicard = String.Format(srcdoc, $"picard/{Model.Fno}");
+        var pathMarksheet = String.Format(srcdoc, $"marksheet/{Model.Fno}");
+        var pathBankAccount = String.Format(srcdoc, $"bankaccount/{Model.Fno}");
+
+        bool isIcard = _amazonUploader.S3Exists(pathIcard).Result;
+        bool isPicard = _amazonUploader.S3Exists(pathPicard).Result;
+        bool isMarksheet = _amazonUploader.S3Exists(pathMarksheet).Result;
+        bool isBankAccount = _amazonUploader.S3Exists(pathBankAccount).Result;
+
+        <hr />
+
+        <div class="transactions-table-th d-none d-md-block">
+            <div class="col-12">
+                <div class="row px-1">
+                    <div class="col-md-12 col-12 py-1">
+                        <h6 class="mb-0 text-primary">Kindly upload the following documents (latest by <strong>31-Dec-2023</strong>):</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12 col-md-8 offset-1">
+
+                <form asp-action="updDetail" method="post" class="form-horizontal" id="frmRTGS" enctype="multipart/form-data" onsubmit="AJAXSubmit(this);return false;">
+
+                    <div class="row pt-1">
+                        <div class="col-md-4 col-12">
+                            <label class="mb-0 form-label">
+                                1. For Student Verification purpose:-
+                                @if (isIcard)
+                                {
+                                    <a id="Viewicard" href="@Url.Content(_amazonUploader.GeneratePreSignedURL(pathIcard).Result)"
+                                       title="View" style="top:7px;position:relative;"
+                                       target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                        </svg>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a id="Viewicard" href="javascript:void(0);"
+                                       title="View" style="top:3px;position:relative;display:none;"
+                                       target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                        </svg>
+                                    </a>
+                                }
+                            </label>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <select class="form-control" asp-for="verify.documenttypeicard">
+                                <option value="">Please Select</option>
+                                <option value="Aadhaar Card">Aadhaar Card</option>
+                                <option value="Passport">Passport</option>
+                                <option value="School I-Card">School I-Card</option>
+                            </select>
+                            <span asp-validation-for="verify.documenttypeicard" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <p class="mb-0">
+                                <input class="file-upload" type="file" asp-for="verify.filesicard" style="" accept=".jpg, .jpeg, .png"
+                                       data-max-size="2097152" onchange="javascript: uploadDocument('icard', @ViewBag.Fno);" />
+                                <span asp-validation-for="verify.filesicard" class="text-danger"></span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row pt-1">
+                        <div class="col-md-4 col-12">
+                            <label class="mb-0 form-label">
+                                2. For Parent document proof:-
+                                @if (isPicard)
+                                {
+                                    <a id="Viewicard" href="@Url.Content(_amazonUploader.GeneratePreSignedURL(pathPicard).Result)"
+                                       title="View" style="top:7px;position:relative;"
+                                       target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                        </svg>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a id="Viewicard" href="javascript:void(0);"
+                                       title="View" style="top:3px;position:relative;display:none;"
+                                       target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                        </svg>
+                                    </a>
+                                }
+                            </label>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <select class="form-control" asp-for="verify.documenttypepicard">
+                                <option value="">Please Select</option>
+                                <option value="Aadhaar Card">Aadhaar Card</option>
+                                <option value="Passport">Passport</option>
+                            </select>
+                            <span asp-validation-for="verify.documenttypepicard" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <p class="mb-0">
+                                <input class="file-upload" type="file" asp-for="verify.filespicard" style="" accept=".jpg, .jpeg, .png"
+                                       data-max-size="2097152" onchange="javascript: uploadDocument('picard', @ViewBag.Fno);" />
+                                <span asp-validation-for="verify.filespicard" class="text-danger"></span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row pt-1">
+                        <div class="col-md-4 col-12">
+                            <label class="mb-0 form-label">
+                                3. For Class Verification purpose:-
+                                @if (isMarksheet)
+                                {
+                                    <a id="Viewicard" href="@Url.Content(_amazonUploader.GeneratePreSignedURL(pathMarksheet).Result)"
+                                       title="View" style="top:7px;position:relative;"
+                                       target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                        </svg>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a id="Viewicard" href="javascript:void(0);"
+                                       title="View" style="top:3px;position:relative;display:none;"
+                                       target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                        </svg>
+                                    </a>
+                                }
+                            </label>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <p class="mb-0 mt-1">
+                                Mark sheet of last school exam
+                            </p>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <p class="mb-0">
+                                <input class="file-upload" type="file" asp-for="verify.filesmarksheet" style="" accept=".jpg, .jpeg, .png"
+                                       data-max-size="2097152" onchange="javascript: uploadDocument('marksheet', @ViewBag.Fno);" />
+                                <span asp-validation-for="verify.filesmarksheet" class="text-danger"></span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row pt-1">
+                        <div class="col-md-4 col-12">
+                            <label class="mb-0 form-label">
+                                4. Cancelled Cheque or Passbook image of Students Bank account:-
+                                @if (isBankAccount)
+                                {
+                                    <a id="Viewicard" href="@Url.Content(_amazonUploader.GeneratePreSignedURL(pathBankAccount).Result)"
+                                       title="View" style="top:7px;position:relative;"
+                                       target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                        </svg>
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a id="Viewicard" href="javascript:void(0);"
+                                       title="View" style="top:3px;position:relative;display:none;"
+                                       target="_blank">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                                        </svg>
+                                    </a>
+                                }
+                            </label>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <select class="form-control" asp-for="verify.documenttypebankaccount">
+                                <option value="">Please Select</option>
+                                <option value="Cancelled Cheque">
+                                    Cancelled Cheque
+                                </option>
+                                <option value="Passbook">
+                                    Passbook
+                                </option>
+                            </select>
+                            <span asp-validation-for="verify.documenttypebankaccount" class="text-danger"></span>
+                        </div>
+                        <div class="col-md-4 col-12">
+                            <p class="mb-0">
+                                <input class="file-upload" asp-for="verify.filesbankaccount" type="file" style="" accept=".jpg, .jpeg, .png"
+                                       data-max-size="2097152" onchange="javascript: uploadDocument('bankaccount', @ViewBag.Fno);" />
+                                <span asp-validation-for="verify.filesbankaccount" class="text-danger"></span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="row pt-1">
+                        <div class="col-md-12 col-12">
+                            <label class="mb-0 form-label">
+                                5. Bank details (RTGS) for reward transfer:-
+                            </label>
+                        </div>
+                        <div class="col-md-12 col-12">
+                            <fieldset class="form-label-group">
+                                <input type="text" class="form-control" asp-for="verify.rtgs.AcountHolderName" placeholder="Type Account Holder Name" value="@dt.Rows[0]["StudentName"]" required="" readonly="readonly">
+                                <label asp-for="verify.rtgs.AcountHolderName">Account Holder Name</label>
+                                <span asp-validation-for="verify.rtgs.AcountHolderName" class="text-danger"></span>
+                            </fieldset>
+
+                            <fieldset class="form-label-group">
+                                <input type="text" class="form-control" asp-for="verify.rtgs.IFSC" placeholder="Type IFSC Code" required="">
+                                <label asp-for="verify.rtgs.IFSC">IFSC Code</label>
+                                <span asp-validation-for="verify.rtgs.IFSC" class="text-danger"></span>
+
+                                <script src="~/lib/jquery/dist/jquery.min.js"></script>
+                                <script>
+                                    $('#verify_rtgs_IFSC').on('input propertychange paste', function () {
+                                        $("#verify_rtgs_BankName").val("");
+                                        $("#verify_rtgs_BranchAdd").val("");
+
+                                        if ($('#verify_rtgs_IFSC').val().length == 11) {
+                                            var url = "https://ifsc.razorpay.com/" + $('#verify_rtgs_IFSC').val();
+
+                                            $.ajax({
+                                                url: url,
+                                                //data: { m: $('#Contact_Mobile').val(), o: $('#ORDERID').val() },
+                                                cache: false,
+                                                //type: "POST",
+                                                success: function (response) {
+                                                    if (response == null || response == "") {
+                                                        //$("#divmobile").html("").hide();
+                                                    }
+                                                    else {
+                                                        $("#verify_rtgs_BankName").val(response.BANK);
+                                                        $("#verify_rtgs_BranchAdd").val(response.ADDRESS);
+                                                        $("#verify_rtgs_ACNO").focus();
+                                                        $("#verify_rtgs_ACNO").select();
+                                                        //alert(response);
+                                                        //alert(response.BANK);
+                                                        //alert(response.BRANCH);
+                                                        //alert(response.ADDRESS);
+                                                    }
+                                                },
+                                                error: function (reponse) {
+                                                    alert("Invalid IFSC Code");
+                                                }
+                                            });
+                                        }
+                                    });
+                                </script>
+                            </fieldset>
+
+                            <fieldset class="form-label-group">
+                                <input type="text" class="form-control" asp-for="verify.rtgs.BankName" list="BankNames" placeholder="Type Nationalised Bank Name" required="">
+                                <label asp-for="verify.rtgs.BankName">Bank Name</label>
+                                <span asp-validation-for="verify.rtgs.BankName" class="text-danger"></span>
+
+                                <datalist id="BankNames">
+                                    <option value="ALLAHABAD BANK"></option>
+                                    <option value="ANDHRA BANK"></option>
+                                    <option value="AXIS BANK"></option>
+                                    <option value="BANDHAN BANK"></option>
+                                    <option value="BANK OF BARODA"></option>
+                                    <option value="BANK OF INDIA"></option>
+                                    <option value="BANK OF MAHARASHTRA"></option>
+                                    <option value="CANARA BANK"></option>
+                                    <option value="CENTRAL BANK OF INDIA"></option>
+                                    <option value="CITIBANK"></option>
+                                    <option value="CITY UNION BANK"></option>
+                                    <option value="CORPORATION BANK"></option>
+                                    <option value="DENA BANK"></option>
+                                    <option value="FEDERAL BANK"></option>
+                                    <option value="HDFC BANK"></option>
+                                    <option value="ICICI BANK"></option>
+                                    <option value="IDBI BANK"></option>
+                                    <option value="INDIAN BANK"></option>
+                                    <option value="INDIAN OVERSEAS BANK"></option>
+                                    <option value="INDUSIND BANK"></option>
+                                    <option value="KARNATAKA BANK"></option>
+                                    <option value="KOTAK MAHINDRA BANK"></option>
+                                    <option value="ORIENTAL BANK OF COMMERCE"></option>
+                                    <option value="PUNJAB AND SIND BANK"></option>
+                                    <option value="PUNJAB NATIONAL BANK"></option>
+                                    <option value="STATE BANK OF INDIA"></option>
+                                    <option value="SYNDICATE BANK"></option>
+                                    <option value="UCO BANK"></option>
+                                    <option value="UNION BANK OF INDIA"></option>
+                                    <option value="UNITED BANK OF INDIA"></option>
+                                    <option value="YES BANK"></option>
+                                </datalist>
+                            </fieldset>
+
+                            <fieldset class="form-label-group">
+                                <input type="text" class="form-control" asp-for="verify.rtgs.BranchAdd" placeholder="Type Bank Address" required="">
+                                <label asp-for="verify.rtgs.BranchAdd">Branch Address</label>
+                                <span asp-validation-for="verify.rtgs.BranchAdd" class="text-danger"></span>
+                            </fieldset>
+
+                            <fieldset class="form-label-group">
+                                <input type="text" class="form-control" asp-for="verify.rtgs.ACNO" placeholder="Type Account No." required="">
+                                <label asp-for="verify.rtgs.ACNO">Account No</label>
+                                <span asp-validation-for="verify.rtgs.ACNO" class="text-danger"></span>
+                            </fieldset>
+
+                            <fieldset class="form-label-group">
+                                <input type="text" class="form-control" asp-for="verify.rtgs.Email" placeholder="Type Primary Email" required="">
+                                <label asp-for="verify.rtgs.Email">Primary Email</label>
+                                <span asp-validation-for="verify.rtgs.Email" class="text-danger"></span>
+                            </fieldset>
+
+                            <fieldset class="form-label-group p-0">
+                                <input type="text" class="form-control" asp-for="verify.rtgs.Email2" placeholder="Type Secondary Email">
+                                <label asp-for="verify.rtgs.Email2">Secondary Email</label>
+                                <span asp-validation-for="verify.rtgs.Email2" class="text-danger"></span>
+                            </fieldset>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 col-12 text-center">
+                            <p class="mb-0">
+                                <div id="loaderRTGS"></div>
+                                <output name="result" class="text-left"></output>
+                                <input type="hidden" asp-for="verify.fno" value="@Model.Fno" />
+                                <button id="btnRTGS" class="btn btn-primary w-100">Submit</button>
+                            </p>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    }
+}
+
+
+@* <script>
+    $(document).ready(function () {
+        $("#btnRTGS").click(function (e) {
+            //Serialize the form datas.
+            e.preventDefault();
+
+            $("#loaderRTGS").html("<img src='../Content/images/ajax-loader1.gif' />");
+
+            var valdata = $("#frmRTGS").serialize();
+            //to get alert popup
+            //alert(valdata);
+            $.ajax({
+                url: "updDetail",
+                type: "POST",
+                dataType: 'json',
+                contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+                data: valdata,
+                success: function (response) {
+                    $("#loaderRTGS").html(response);
+                    if (response.indexOf("success") != -1) {
+                        $("#validrtgs").show();
+                    }
+                    else if (response.indexOf("expire") != -1) {
+                        window.location.href = "@Url.Action("Result", "Index")";
+                    }
+                },
+                error: function (err) {
+                    $("#loaderRTGS").html(err.statusText);
+                }
+            });
+        });
+    });
+</script> *@
+
+<script>
+    async function AJAXSubmit(oFormElement) {
+        var resultElement = oFormElement.elements.namedItem("result");
+        resultElement.innerHTML = "<img src='../images/ajax-loader.gif' />";
+
+        $("#btnRTGS").text("Wait...");
+        $("#btnRTGS").css("cursor", "wait");
+        $('#btnRTGS').prop('disabled', true);
+
+        const formData = new FormData(oFormElement);
+
+        try {
+            var promise;
+            const response = await fetch(oFormElement.action, {
+                method: 'POST',
+                body: formData
+            });
+
+            let responseText = await response.text();
+
+            if (response.ok) {
+                responseText = "<div class='alert alert-success'>" + responseText + "</div>";
+                //window.location.href = '/';
+            }
+            else {
+                responseText = "<div class='alert alert-danger'>" + responseText + "</div>";
+            }
+
+            resultElement.innerHTML = responseText;
+        } catch (error) {
+            resultElement.innerHTML = 'Error:', error;
+            console.error('Error:', error);
+        }
+
+        $('#btnRTGS').prop('disabled', false);
+        $("#btnRTGS").text("Submit");
+        $("#btnRTGS").css("cursor", "pointer");
+
+    }
+</script>

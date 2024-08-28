@@ -1,0 +1,104 @@
+﻿
+
+.wizard-progress {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+    position: relative;
+    height: 70px;
+}
+
+    .wizard-progress .step {
+        display: table-cell;
+        text-align: center;
+        vertical-align: top;
+        overflow: visible;
+        position: relative;
+        font-size: 14px;
+        color: #6B6F82;
+        font-weight: bold;
+    }
+
+        .wizard-progress .step:not(:last-child):before {
+            content: "";
+            display: block;
+            position: absolute;
+            left: 50%;
+            top: 37px;
+            background-color: #D3D3D3;/*#fff;*/
+            height: 6px;
+            width: 100%;
+        }
+
+        .wizard-progress .step .node {
+            display: inline-block;
+            border: 6px solid #D3D3D3;/*#fff;*/
+            background-color: #fff;
+            border-radius: 18px;
+            height: 30px;
+            width: 30px;
+            position: absolute;
+            top: 25px;
+            left: 50%;
+            margin-left: -18px;
+            color: #fff;
+        }
+
+        .wizard-progress .step.apporved:before {
+            background-color: green;
+        }
+
+        .wizard-progress .step.apporved .node {
+            border-color: green;
+            background-color: green;
+        }
+
+            .wizard-progress .step.apporved .node:before {
+                font-family: FontAwesome;
+                content: "";
+            }
+
+        /*.wizard-progress .step.in-progress:before {
+            background: #07c;
+            background: -moz-linear-gradient(left, #07c 0%, #fff 100%);
+            background: -webkit-linear-gradient(left, #07c 0%, #fff 100%);
+            background: linear-gradient(to right, #07c 0%, #fff 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr="#07c", endColorstr="#fff",GradientType=1 );
+        }
+
+        .wizard-progress .step.in-progress .node:before {
+            font-family: FontAwesome;
+            content: "\f05e";
+        }*/
+
+        /*.wizard-progress .step.in-progress .node {
+            border-color: #07c;
+        }*/
+
+        .wizard-progress .step.reject:before {
+            background-color: red;
+        }
+
+        .wizard-progress .step.reject .node {
+            border-color: red;
+            background-color: red;
+        }
+
+            .wizard-progress .step.reject .node:before {
+                font-family: FontAwesome;
+                content: "\f05e";
+            }
+
+        .wizard-progress .step.in-progress:before {
+            background-color: #07c;
+        }
+
+        .wizard-progress .step.in-progress .node {
+            border-color: #07c;
+            background-color: #07c;
+        }
+
+            .wizard-progress .step.in-progress .node:before {
+                font-family: FontAwesome;
+                content: "\f068";
+            }
